@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 22
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v5
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Load & Cache Dependencies
+        uses: ./.github/actions/cached-deps
+
+      # @see https://github.com/marketplace/actions/nx-set-shas
+      - name: Set SHAs for Nx Cloud
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Run Linting, Testing, Typechecking and Building
+        run: |
+          pnpm nx affected -t lint test typecheck
+          pnpm nx affected -t build --exclude="mobile" --exclude="libs/*"
