@@ -47,6 +47,14 @@ The following commands are available from the root `package.json`:
 - `pnpm ios` - Start the iOS mobile app
 - `pnpm android` - Start the Android mobile app
 
+## Adding workspace specific dependencies
+
+```sh
+pnpm add multer --filter "backend"
+pnpm add react-native-reanimated --filter "mobile"
+pnpm add framer-motion --filter "marketing"
+```
+
 ## Run tasks
 
 To run the dev server for your app, use:

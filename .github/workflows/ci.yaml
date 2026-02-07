@@ -4,8 +4,6 @@ on:
   pull_request:
     branches: [main]
 
-  workflow_dispatch:
-
 env:
   NODE_VERSION: 22
 
@@ -15,6 +13,8 @@ jobs:
     steps:
       - name: Get Code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v5

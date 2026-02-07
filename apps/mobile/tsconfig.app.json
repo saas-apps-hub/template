@@ -33,7 +33,7 @@
     "__tests__/**/*.ts",
     "__tests__/**/*.tsx"
   ],
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "references": [
     {
       "path": "../../libs/core/tsconfig.lib.json"
