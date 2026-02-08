@@ -5,7 +5,7 @@ const port = process.env.BACKEND_PORT ? Number(process.env.BACKEND_PORT) : 8000;
 
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send({ message: "Hello API" });
 });
 
