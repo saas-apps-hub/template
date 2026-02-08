@@ -47,16 +47,16 @@
           "build"
         ],
         "options": {
-          "buildTarget": "@template/backend:build",
+          "buildTarget": "backend:build",
           "runBuildTargetDependencies": false,
           "inspect": false
         },
         "configurations": {
           "development": {
-            "buildTarget": "@template/backend:build:development"
+            "buildTarget": "backend:build:development"
           },
           "production": {
-            "buildTarget": "@template/backend:build:production"
+            "buildTarget": "backend:build:production"
           }
         }
       },
