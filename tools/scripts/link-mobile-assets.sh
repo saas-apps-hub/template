@@ -4,6 +4,11 @@
 # This is needed because withNxMetro sets projectRoot to workspace root,
 # causing Metro to look for assets at the root level
 
+if [ -n "${CI:-}" ]; then
+  echo "Skipping link-mobile-assets in CI/CD pipeline"
+  exit 0
+fi
+
 # Get the workspace root path (script should be run from workspace root)
 workspace_root="$(cd "$(dirname "$0")/../.." && pwd)"
 mobile_assets_path="$workspace_root/apps/mobile/assets"
