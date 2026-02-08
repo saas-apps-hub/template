@@ -6,7 +6,12 @@ const { composePlugins, withNx } = require("@nx/next");
 const nextConfig = {
   // Use this to set Nx-specific options
   // See: https://nx.dev/recipes/next/next-config-setup
-  nx: {}
+  nx: {},
+  /**
+   *  Enable standalone output for Docker deployments
+   *  Controlled via NEXTJS_STANDALONE env variable (default: false)
+   */
+  output: process.env.NEXTJS_STANDALONE === "true" ? "standalone" : undefined
 };
 
 const plugins = [

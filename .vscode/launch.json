@@ -4,9 +4,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug @template/backend with Nx",
+      "name": "Debug backend with Nx",
       "runtimeExecutable": "pnpm exec",
-      "runtimeArgs": ["nx", "serve", "@template/backend"],
+      "runtimeArgs": ["nx", "serve", "backend"],
       "env": {
         "NODE_OPTIONS": "--inspect=9229"
       },

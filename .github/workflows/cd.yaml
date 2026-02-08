@@ -1,0 +1,98 @@
+name: CD
+
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/backend/**"
+      - "apps/marketing/**"
+      - "apps/backend/Dockerfile"
+      - "apps/marketing/Dockerfile"
+      - "docker-compose.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/cd.yml"
+
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  OWNER: ${{ github.repository_owner }}
+  NODE_VERSION: 22
+  TAG: latest
+
+jobs:
+  cd:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps
+
+      - name: Set SHAs for Nx Cloud
+        uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: main
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # @notice: Uncomment if you want to use a specific tag
+      # - name: Set image tag
+      #   run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Build and push affected Docker images
+        run: pnpm nx affected -t docker:push --exclude="mobile" --exclude="libs/*"
+        env:
+          REGISTRY: ${{ env.REGISTRY }}
+          OWNER: ${{ env.OWNER }}
+          TAG: ${{ env.TAG }}
+
+      - name: Summary
+        run: |
+          echo "## 🐳 Docker Images Built and Pushed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Affected Docker images were built and pushed via \`nx affected -t docker:push\`." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Images are available at:" >> $GITHUB_STEP_SUMMARY
+          echo "- ${{ env.REGISTRY }}/${{ env.OWNER }}/template-backend (tag: \`${{ env.TAG }}\`)" >> $GITHUB_STEP_SUMMARY
+          echo "- ${{ env.REGISTRY }}/${{ env.OWNER }}/template-marketing (tag: \`${{ env.TAG }}\`)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/pkgs/container/template-backend" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/pkgs/container/template-marketing" >> $GITHUB_STEP_SUMMARY
+
+      # @notice: Configure coolify for deployment webhooks, see: https://coolify.io/docs/applications/ci-cd/github/actions
+      # - name: Deploy to Coolify
+      #   run: |
+      #     curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'

@@ -39,6 +39,32 @@
           }
         }
       },
+      "serve": {
+        "continuous": true,
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "backend:build",
+          "runBuildTargetDependencies": false,
+          "inspect": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "backend:build:development"
+          },
+          "production": {
+            "buildTarget": "backend:build:production"
+          }
+        }
+      },
+      "test": {
+        "options": {
+          "passWithNoTests": true
+        }
+      },
       "prune-lockfile": {
         "dependsOn": [
           "build"
@@ -73,30 +99,23 @@
         ],
         "executor": "nx:noop"
       },
-      "serve": {
-        "continuous": true,
-        "executor": "@nx/js:node",
-        "defaultConfiguration": "development",
+      "docker:build": {
+        "executor": "nx:run-commands",
         "dependsOn": [
-          "build"
+          "build",
+          "prune"
         ],
         "options": {
-          "buildTarget": "@template/backend:build",
-          "runBuildTargetDependencies": false,
-          "inspect": false
-        },
-        "configurations": {
-          "development": {
-            "buildTarget": "@template/backend:build:development"
-          },
-          "production": {
-            "buildTarget": "@template/backend:build:production"
-          }
+          "command": "docker build -f apps/backend/Dockerfile . -t ${REGISTRY}/${OWNER}/template-backend:${TAG}"
         }
       },
-      "test": {
+      "docker:push": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "docker:build"
+        ],
         "options": {
-          "passWithNoTests": true
+          "command": "docker push ${REGISTRY}/${OWNER}/template-backend:${TAG}"
         }
       }
     }

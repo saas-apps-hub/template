@@ -1,9 +1,17 @@
 {
   "cSpell.words": [
+    "addgroup",
+    "adduser",
+    "Buildx",
     "commitlint",
+    "Coolify",
+    "cpus",
     "demirtasdurmus",
+    "healthcheck",
     "mobileprovision",
+    "NEXTJS",
     "nrwl",
+    "pkgs",
     "pnpx",
     "swcrc",
     "toplevel"

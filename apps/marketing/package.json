@@ -13,6 +13,45 @@
           ],
           "cwd": "apps/marketing"
         }
+      },
+      "build-standalone": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "next build",
+          "cwd": "apps/marketing",
+          "env": {
+            "NEXTJS_STANDALONE": "true"
+          }
+        },
+        "cache": false,
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/.next/standalone",
+          "{projectRoot}/.next/static"
+        ],
+        "configurations": {
+          "production": {}
+        }
+      },
+      "docker:build": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "build-standalone"
+        ],
+        "options": {
+          "command": "docker build -f apps/marketing/Dockerfile . -t ${REGISTRY}/${OWNER}/template-marketing:${TAG}"
+        }
+      },
+      "docker:push": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "docker:build"
+        ],
+        "options": {
+          "command": "docker push ${REGISTRY}/${OWNER}/template-marketing:${TAG}"
+        }
       }
     }
   },
