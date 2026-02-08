@@ -5,18 +5,18 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    # paths:
-    #   - "apps/backend/**"
-    #   - "apps/marketing/**"
-    #   - "apps/backend/Dockerfile"
-    #   - "apps/marketing/Dockerfile"
-    #   - "docker-compose.yml"
-    #   - "package.json"
-    #   - "pnpm-lock.yaml"
-    #   - ".github/workflows/cd.yml"
+    paths:
+      - "apps/backend/**"
+      - "apps/marketing/**"
+      - "apps/backend/Dockerfile"
+      - "apps/marketing/Dockerfile"
+      - "docker-compose.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/cd.yml"
 
   workflow_dispatch:
 
