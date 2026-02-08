@@ -23,7 +23,6 @@ on:
 env:
   REGISTRY: ghcr.io
   OWNER: ${{ github.repository_owner }}
-  PROJECT: template
   NODE_VERSION: 22
   TAG: latest
 
@@ -32,7 +31,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-      packages: write # Required for pushing to GitHub Container Registry
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -40,7 +39,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js
+      - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -53,7 +52,6 @@ jobs:
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-deps
 
-        # @see https://github.com/marketplace/actions/nx-set-shas
       - name: Set SHAs for Nx Cloud
         uses: nrwl/nx-set-shas@v4
         with:
@@ -93,6 +91,7 @@ jobs:
           echo "- https://github.com/${{ github.repository }}/pkgs/container/template-backend" >> $GITHUB_STEP_SUMMARY
           echo "- https://github.com/${{ github.repository }}/pkgs/container/template-marketing" >> $GITHUB_STEP_SUMMARY
 
+      # @notice: Configure coolify for deployment webhooks, see: https://coolify.io/docs/applications/ci-cd/github/actions
       # - name: Deploy to Coolify
       #   run: |
       #     curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
