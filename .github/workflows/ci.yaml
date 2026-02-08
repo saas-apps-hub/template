@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Get Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
 
