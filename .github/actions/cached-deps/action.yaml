@@ -34,6 +34,7 @@ runs:
       shell: bash
 
     - name: 'Save pnpm store'
+      if: steps.cache-pnpm-store.outputs.cache-hit != 'true'
       uses: 'actions/cache/save@v4'
       with:
         path: ~/.local/share/pnpm/store
