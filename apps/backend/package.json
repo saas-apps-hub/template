@@ -98,6 +98,25 @@
           "copy-workspace-modules"
         ],
         "executor": "nx:noop"
+      },
+      "docker:build": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "build",
+          "prune"
+        ],
+        "options": {
+          "command": "docker build -f apps/backend/Dockerfile . -t ${REGISTRY}/${OWNER}/template-backend:${TAG}"
+        }
+      },
+      "docker:push": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "docker:build"
+        ],
+        "options": {
+          "command": "docker push ${REGISTRY}/${OWNER}/template-backend:${TAG}"
+        }
       }
     }
   },

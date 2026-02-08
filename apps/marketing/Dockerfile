@@ -6,17 +6,17 @@
 # @see https://datawookie.dev/blog/2024/02/standalone-next-js-application-in-docker/
 # @see https://www.youtube.com/watch?v=LVziN3yBtKU
 #########################################################
-FROM node:22-alpine
+FROM node:${NODE_VERSION:-22}-alpine
 
 WORKDIR /app
 
-RUN addgroup --system marketing && \
-  adduser --system -G marketing marketing
+RUN addgroup --system apps && \
+  adduser --system -G apps apps
 
-COPY apps/marketing/.next/standalone/ marketing/
-COPY apps/marketing/.next/static marketing/apps/marketing/.next/static
-COPY apps/marketing/public marketing/apps/marketing/public
+COPY apps/marketing/.next/standalone/ .
+COPY apps/marketing/.next/static apps/marketing/.next/static
+COPY apps/marketing/public apps/marketing/public
 
-RUN chown -R marketing:marketing .
+RUN chown -R apps:apps .
 
-CMD ["node", "marketing/apps/marketing/server.js"]
+CMD ["node", "apps/marketing/server.js"]
