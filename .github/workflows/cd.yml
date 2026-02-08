@@ -65,73 +65,30 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build with Nx
-        run: pnpm nx run-many -t=docker-push -p=backend,marketing
+      # @notice: Uncomment if you want to use a specific tag
+      # - name: Set image tag
+      #   run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
-      - name: Extract metadata for server
-        id: meta-server
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/shot2post-server
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,format=short
-            type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push server image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./apps/server/Dockerfile
-          push: true
-          tags: ${{ steps.meta-server.outputs.tags }}
-          labels: ${{ steps.meta-server.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: linux/amd64
-
-      - name: Extract metadata for marketing
-        id: meta-marketing
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/shot2post-marketing
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,format=short
-            type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push marketing image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./apps/marketing/Dockerfile
-          push: true
-          tags: ${{ steps.meta-marketing.outputs.tags }}
-          labels: ${{ steps.meta-marketing.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: linux/amd64
-
-      - name: Compute image tag (short sha)
-        id: vars
-        run: echo "image_tag=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+      - name: Build and push affected Docker images
+        run: pnpm nx affected -t docker:push --exclude="mobile" --exclude="libs/*"
+        env:
+          REGISTRY: ${{ env.REGISTRY }}
+          OWNER: ${{ env.OWNER }}
+          TAG: ${{ env.TAG }}
 
       - name: Summary
         run: |
           echo "## 🐳 Docker Images Built and Pushed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Server Image" >> $GITHUB_STEP_SUMMARY
-          echo "- \`${{ steps.meta-server.outputs.tags }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Marketing Image" >> $GITHUB_STEP_SUMMARY
-          echo "- \`${{ steps.meta-marketing.outputs.tags }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "Affected Docker images were built and pushed via \`nx affected -t docker:push\`." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Images are available at:" >> $GITHUB_STEP_SUMMARY
-          echo "- https://github.com/${{ github.repository }}/pkgs/container/shot2post-server" >> $GITHUB_STEP_SUMMARY
-          echo "- https://github.com/${{ github.repository }}/pkgs/container/shot2post-marketing" >> $GITHUB_STEP_SUMMARY
+          echo "- ${{ env.REGISTRY }}/${{ env.OWNER }}/template-backend (tag: \`${{ env.TAG }}\`)" >> $GITHUB_STEP_SUMMARY
+          echo "- ${{ env.REGISTRY }}/${{ env.OWNER }}/template-marketing (tag: \`${{ env.TAG }}\`)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/pkgs/container/template-backend" >> $GITHUB_STEP_SUMMARY
+          echo "- https://github.com/${{ github.repository }}/pkgs/container/template-marketing" >> $GITHUB_STEP_SUMMARY
 
-      - name: Deploy to Coolify
-        run: |
-          curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+      # - name: Deploy to Coolify
+      #   run: |
+      #     curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
