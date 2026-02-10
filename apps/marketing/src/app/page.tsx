@@ -1,3 +1,5 @@
+import { sample } from "@template/core";
+
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -5,6 +7,8 @@ export default function HomePage() {
         <span> Hello there, </span>
         Welcome to marketing
       </h1>
+
+      <p>Sample Library Utilization: {sample()}</p>
     </div>
   );
 }
