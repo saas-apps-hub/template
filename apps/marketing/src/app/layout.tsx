@@ -1,4 +1,5 @@
 import "../styles/global.css";
+
 import { PropsWithChildren } from "react";
 import { Metadata } from "next";
 

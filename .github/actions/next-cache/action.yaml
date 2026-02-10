@@ -1,0 +1,16 @@
+# @see https://nextjs.org/docs/app/guides/ci-build-caching#github-actions
+name: 'Cache Next.js builds'
+description: 'Cache Next.js .next/cache directory to speed up builds'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache Next.js builds
+      uses: actions/cache@v5
+      with:
+        path: |
+          apps/marketing/.next/cache
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('apps/marketing/**/*.js', 'apps/marketing/**/*.jsx', 'apps/marketing/**/*.ts', 'apps/marketing/**/*.tsx', 'libs/core/**/*.js', 'libs/core/**/*.ts') }}
+        restore-keys: |
+          ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+          ${{ runner.os }}-nextjs-
