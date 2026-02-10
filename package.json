@@ -8,6 +8,8 @@
     "ios": "nx run mobile:ios",
     "android": "nx run mobile:android",
     "clean": "./tools/scripts/clean.sh",
+    "lint:check": "eslint \"**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}\"",
+    "lint:fix": "eslint --fix \"**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,css}\"",
     "format:check": "prettier --check \"**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,json,css,md}\"",
     "format:write": "prettier --write \"**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,json,css,md}\"",
     "prepare": "husky"
