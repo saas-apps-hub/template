@@ -1,4 +1,5 @@
 import { StyleSheet, ScrollView, View, Text, StatusBar } from "react-native";
+import { sample } from "@template/core";
 
 export default function HomeScreen() {
   return (
@@ -10,6 +11,8 @@ export default function HomeScreen() {
           <Text style={[styles.textXL, styles.appTitleText]} testID="heading" role="heading">
             Welcome Mobile
           </Text>
+
+          <Text>Sample Library Utilization: {sample()}</Text>
         </View>
       </ScrollView>
     </View>

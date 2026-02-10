@@ -20,7 +20,7 @@ Replace all occurrences of:
 - `Template` with `<YourNewProjectName>` (case-sensitive)
 - `template` with `<your-project-name>` (case-sensitive)
 
-by excluding `pnpm-lock.yaml` and `README.md` files for both of them.
+by excluding `pnpm-lock.yaml`, `README.md`, and `AGENTS.md` files for both of them.
 
 This includes updating package names, workspace names, and any references throughout the codebase.
 

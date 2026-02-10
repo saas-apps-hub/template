@@ -40,18 +40,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
-      - name: Load & Cache dependencies
-        uses: ./.github/actions/cached-deps
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Set SHAs for Nx Cloud
         uses: nrwl/nx-set-shas@v4
