@@ -37,7 +37,7 @@
     "@babel/runtime": "~7.27.6",
     "@testing-library/react-native": "~13.2.0",
     "@expo/cli": "~54.0.16",
-    "@types/react": "19.1.0",
+    "@types/react": "~19.1.10",
     "babel-preset-expo": "~54.0.7",
     "jest-expo": "~54.0.13",
     "metro-config": "~0.83.0",
