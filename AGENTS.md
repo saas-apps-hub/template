@@ -1,7 +1,9 @@
+# Project Context
+
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->
 
-# General Guidelines for working with Nx
+## General Guidelines for working with Nx
 
 - When running tasks (for example build, lint, test, e2e, etc.), always prefer running the task through `nx` (i.e. `nx run`, `nx run-many`, `nx affected`) instead of using the underlying tooling directly
 - You have access to the Nx MCP server and its tools, use them to help the user
@@ -14,8 +16,6 @@
 <!-- nx configuration end-->
 
 ---
-
-# Project Context
 
 ## Purpose
 
@@ -45,9 +45,9 @@ This is a starter template designed for rapid idea validation and SaaS project d
 
 ---
 
-# Development Workflow
+## Development Workflow
 
-## Quick Start
+### Quick Start
 
 ```bash
 pnpm install              # Install all dependencies
@@ -57,7 +57,7 @@ pnpm ios                  # Start iOS app
 pnpm android              # Start Android app
 ```
 
-## Running Tasks with Nx
+### Running Tasks with Nx
 
 ```bash
 nx serve <project>                    # Start dev server
@@ -69,7 +69,7 @@ nx show project <project>             # See all available targets
 nx affected -t <target>               # Run target on affected projects only
 ```
 
-## When to Use nx vs pnpm
+### When to Use nx vs pnpm
 
 - **Use `nx`**: For running tasks (build, test, lint, serve)
 - **Use `pnpm`**: For dependency management (install, add, remove)
@@ -77,9 +77,9 @@ nx affected -t <target>               # Run target on affected projects only
 
 ---
 
-# Dependency Management
+## Dependency Management
 
-## Adding Workspace-Specific Dependencies
+### Adding Workspace-Specific Dependencies
 
 Always add dependencies to the specific project that needs them:
 
@@ -96,13 +96,13 @@ pnpm add @types/framer-motion --filter "marketing" --save-dev
 pnpm add react-native-reanimated --filter "mobile"
 ```
 
-## Root vs Workspace Dependencies
+### Root vs Workspace Dependencies
 
 - **Root `devDependencies`**: Build tools, linters, formatters, Nx plugins, shared testing utilities
 - **Workspace `dependencies`**: Project-specific runtime dependencies
 - **Shared code**: Add to `libs/core` when needed across multiple apps (keep platform-agnostic)
 
-## Important Rules
+### Important Rules
 
 - Do NOT install React Native packages in backend or marketing
 - Do NOT install browser-only packages in backend or mobile
@@ -110,9 +110,9 @@ pnpm add react-native-reanimated --filter "mobile"
 
 ---
 
-# Code Quality & Testing
+## Code Quality & Testing
 
-## Available Commands
+### Available Commands
 
 ```bash
 nx affected -t lint          # Lint changed projects
@@ -122,7 +122,7 @@ nx run-many -t lint          # Lint all projects
 nx run-many -t test          # Test all projects
 ```
 
-## Pre-commit Hooks
+### Pre-commit Hooks
 
 Husky automatically runs on every commit via lint-staged:
 
@@ -130,7 +130,7 @@ Husky automatically runs on every commit via lint-staged:
 - **ESLint**: Lints and fixes staged TS/JS files
 - **TypeScript**: Type checks affected projects
 
-## Commit Message Format
+### Commit Message Format
 
 Conventional commits enforced by commitlint:
 
@@ -141,7 +141,7 @@ chore: update dependencies
 docs: improve setup instructions
 ```
 
-## Testing Guidelines
+### Testing Guidelines
 
 - Tests are located in `__tests__/` directories within each project
 - Run tests before committing: `nx affected -t test`
@@ -150,9 +150,9 @@ docs: improve setup instructions
 
 ---
 
-# CI/CD Workflows
+## CI/CD Workflows
 
-## CI on Pull Requests
+### CI on Pull Requests
 
 **Workflow**: `.github/workflows/ci.yaml`
 
@@ -166,7 +166,7 @@ nx affected -t build --exclude="mobile" --exclude="libs/*"
 - Excludes mobile(build target is `eas:build`) and libs (no separate build targets)
 - Must pass before merging
 
-## CD on Main Branch
+### CD on Main Branch
 
 **Workflow**: `.github/workflows/cd.yaml`
 
@@ -181,16 +181,16 @@ nx affected -t docker:push --exclude="mobile" --exclude="libs/*"
 - Tags images as `latest` (configurable via env vars)
 - Excludes mobile (use EAS Build instead)
 
-## Docker Image Names
+### Docker Image Names
 
 - Backend: `ghcr.io/<owner>/<project-name>-backend:latest`
 - Marketing: `ghcr.io/<owner>/<project-name>-marketing:latest`
 
 ---
 
-# Docker & Deployment
+## Docker & Deployment
 
-## Available Docker Targets
+### Available Docker Targets
 
 ```bash
 nx docker:build backend      # Build Docker image locally
@@ -202,7 +202,7 @@ export OWNER=<your-github-username>
 export TAG=latest
 ```
 
-## Docker Build Details
+### Docker Build Details
 
 **Backend**:
 
@@ -221,7 +221,7 @@ export TAG=latest
 - Not containerized (use EAS Build for app stores)
 - See `eas.json` for EAS configuration
 
-## Local Development with Docker
+### Local Development with Docker
 
 ```bash
 docker compose up            # Start all services
@@ -230,9 +230,9 @@ docker compose down          # Stop all services
 
 ---
 
-# Project-Specific Guidelines
+## Project-Specific Guidelines
 
-## Backend (`apps/backend`)
+### Backend (`apps/backend`)
 
 - **Entry point**: `src/main.ts`
 - **Tests**: `__tests__/`
@@ -240,7 +240,7 @@ docker compose down          # Stop all services
 - **Build output**: `dist/` (esbuild)
 - **Dependencies**: Add backend-specific packages here (Express middleware, database clients, etc.)
 
-## Marketing (`apps/marketing`)
+### Marketing (`apps/marketing`)
 
 - **Framework**: Next.js 16 with App Router
 - **Pages**: `src/app/` (App Router structure)
@@ -249,7 +249,7 @@ docker compose down          # Stop all services
 - **Build output**: `.next/`
 - **Dependencies**: Add web-specific packages here (React libraries, UI components, etc.)
 
-## Mobile (`apps/mobile`)
+### Mobile (`apps/mobile`)
 
 - **Framework**: Expo with Expo Router
 - **Screens**: `src/app/` (file-based routing)
@@ -258,7 +258,7 @@ docker compose down          # Stop all services
 - **Dependencies**: Add React Native packages here
 - **Platform scripts**: `pnpm ios`, `pnpm android`
 
-## Shared Library (`libs/core`)
+### Shared Library (`libs/core`)
 
 - **Purpose**: Shared TypeScript code across all apps
 - **Exports**: `src/index.ts`
@@ -267,9 +267,9 @@ docker compose down          # Stop all services
 
 ---
 
-# Common Tasks
+## Common Tasks
 
-## See Available Targets for a Project
+### See Available Targets for a Project
 
 ```bash
 nx show project backend
@@ -277,7 +277,7 @@ nx show project marketing
 nx show project mobile
 ```
 
-## Generate New Projects
+### Generate New Projects
 
 ```bash
 nx g @nx/node:app <name>              # New Node.js app
@@ -286,14 +286,14 @@ nx g @nx/expo:app <name>              # New Expo app
 nx g @nx/node:lib <name>              # New shared library
 ```
 
-## View Project Graph
+### View Project Graph
 
 ```bash
 nx graph                              # Interactive project graph
 nx affected:graph                     # Graph of affected projects
 ```
 
-## Clean Build Artifacts
+### Clean Build Artifacts
 
 ```bash
 pnpm clean                            # Run clean script (removes dist/, .next/, node_modules/.cache)
@@ -301,11 +301,11 @@ pnpm clean                            # Run clean script (removes dist/, .next/,
 
 ---
 
-# Troubleshooting
+## Troubleshooting
 
-## Common Issues
+### Common Issues
 
-**Cache Issues**
+#### **Cache Issues**
 
 ```bash
 nx reset                              # Clear Nx cache
@@ -314,27 +314,27 @@ pnpm clean                            # Nuclear option: fresh install(requires u
 pnpm install                          # Ensure all deps are installed again
 ```
 
-**Port Conflicts**
+#### **Port Conflicts**
 
 - Backend uses port 8000, marketing uses 3000
 - Check if ports are in use: `lsof -i :8000` or `lsof -i :3000`
 - Kill process: `kill -9 <PID>`
 - Or change ports in `.env` file
 
-**TypeScript Errors After Adding Dependencies**
+#### **TypeScript Errors After Adding Dependencies**
 
 ```bash
 nx affected -t typecheck              # Check what's actually broken
 pnpm install                          # Ensure all deps are installed
 ```
 
-**Docker Build Fails**
+#### **Docker Build Fails**
 
 - Ensure you've run `nx build <project>` first
 - Check that `.env` has required `REGISTRY`, `OWNER`, `TAG` set
 - Verify Docker daemon is running: `docker ps`
 
-**Git/Affected Detection Not Working**
+#### **Git/Affected Detection Not Working**
 
 ```bash
 git status                            # Check for uncommitted changes
@@ -343,13 +343,13 @@ nx reset                              # Reset Nx daemon
 
 ---
 
-# Decision Guide
+## Decision Guide
 
-## When Adding New Code
+### When Adding New Code
 
 Use this decision tree to determine where new code should live:
 
-```
+```sh
 ┌─ Is the code shared across multiple apps?
 │
 ├─ YES → Does it use platform-specific APIs?
@@ -377,7 +377,7 @@ Use this decision tree to determine where new code should live:
                         ✓ Native modules, device APIs
 ```
 
-## When Adding Dependencies
+### When Adding Dependencies
 
 **Decision matrix:**
 
@@ -398,21 +398,21 @@ Use this decision tree to determine where new code should live:
 
 ---
 
-# Environment Setup
+## Environment Setup
 
-## Prerequisites
+### Prerequisites
 
 - **Node.js 22+** (specified in `.nvmrc`)
 - **pnpm 10+**
 
-## Initial Setup
+### Initial Setup
 
 ```bash
 cp .env.example .env                  # Copy environment template
 # Edit .env with your configuration
 ```
 
-## Environment Variables
+### Environment Variables
 
 The project uses a root `.env` file (see `.env.example` for template). Required variables:
 
@@ -437,9 +437,9 @@ The project uses a root `.env` file (see `.env.example` for template). Required 
 
 ---
 
-# Best Practices
+## Best Practices
 
-## For Agents Working on This Codebase
+### For Agents Working on This Codebase
 
 1. **Always use `nx affected`** in CI/CD contexts to only process changed projects
 2. **Add dependencies to the correct workspace** using `--filter` flag
@@ -450,13 +450,13 @@ The project uses a root `.env` file (see `.env.example` for template). Required 
 7. **Understand affected detection**: Nx uses git to determine what changed
 8. **Mobile is special**: No Docker, uses EAS Build, has different deployment flow
 
-## Performance Tips
+### Performance Tips
 
 - Use `nx affected` instead of `nx run-many` when possible
 - Leverage Nx caching: tasks won't re-run if inputs haven't changed
 - Use `nx reset` if cache behaves unexpectedly
 
-## Version Management
+### Version Management
 
 **Current Stack Versions:**
 
