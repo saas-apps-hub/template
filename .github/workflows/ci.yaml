@@ -17,16 +17,17 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Must match semver in package.json `packageManager` (pnpm/action-setup@v4 rejects a mismatch vs `pnpm@`).
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 10.33.4
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
