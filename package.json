@@ -2,7 +2,7 @@
   "name": "@template/source",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@10.19.0",
+  "packageManager": "pnpm@10.33.4",
   "scripts": {
     "backend": "nx run backend:serve",
     "marketing": "nx run marketing:serve",
