@@ -17,10 +17,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Must match semver in package.json `packageManager` (pnpm/action-setup@v4 rejects a mismatch vs `pnpm@`).
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 10.19.0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v6
