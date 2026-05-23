@@ -19,6 +19,7 @@ FORCE="${1:-}"
 
 EXCLUDES=(
   ".env"
+  "cspell.json"
 )
 
 EXCLUDE_ARGS=()
@@ -52,4 +53,3 @@ else
   echo -e "${YELLOW}Cleanup cancelled.${NC}"
   exit 1
 fi
-
