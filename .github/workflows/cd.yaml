@@ -40,9 +40,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Must match semver in package.json `packageManager` (pnpm/action-setup@v4 rejects a mismatch vs `pnpm@`).
+      # Must match semver in package.json `packageManager` (pnpm/action-setup rejects a mismatch vs `pnpm@`).
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.33.4
 
@@ -56,7 +56,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Set SHAs for Nx Cloud
-        uses: nrwl/nx-set-shas@v4
+        uses: nrwl/nx-set-shas@v5
         with:
           main-branch-name: main
 
