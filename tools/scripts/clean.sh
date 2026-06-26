@@ -40,9 +40,12 @@ else
 fi
 
 if [[ "${confirm}" == "Y" || "${confirm}" == "y" ]]; then
-  echo -e "\n${YELLOW}Stopping Nx daemon & clearing cache...${NC}"
+  echo -e "\n${YELLOW}Stopping Nx daemon & clearing caches...${NC}"
   if command -v pnpx >/dev/null 2>&1; then
     pnpx nx reset >/dev/null 2>&1 || true
+  fi
+  if command -v pnpm >/dev/null 2>&1; then
+    pnpm cache delete "*" >/dev/null 2>&1 || true
   fi
 
   echo -e "${YELLOW}Cleaning repository (git clean -xdf)...${NC}"

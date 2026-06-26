@@ -1,17 +1,17 @@
 {
   "expo": {
     "name": "Template",
-    "slug": "template",
+    "slug": "template-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "template",
+    "scheme": "template-mobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "platforms": ["ios", "android"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.demirtasdurmus.template",
+      "bundleIdentifier": "com.demirtasdurmus.template-mobile",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

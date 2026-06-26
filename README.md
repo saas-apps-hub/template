@@ -2,7 +2,7 @@
 
 This template provides basic starter applications for backend, web, and mobile development. These are minimal implementations that should be enhanced according to your specific project requirements.
 
-The workspace includes a shared `libs/core` library that can be used to share code among all applications.
+The workspace includes a shared `libs/shared` library that can be used to share code among all applications.
 
 ## Prerequisites
 
@@ -60,19 +60,19 @@ pnpm add framer-motion --filter "marketing"
 To run the dev server for your app, use:
 
 ```sh
-pnpm nx serve backend
+pnpm nx serve @template/backend
 ```
 
 To create a production bundle:
 
 ```sh
-pnpm nx build backend
+pnpm nx build @template/backend
 ```
 
 To see all available targets to run for a project, run:
 
 ```sh
-pnpm nx show project backend
+pnpm nx show project @template/backend
 ```
 
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.

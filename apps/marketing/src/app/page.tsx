@@ -1,4 +1,4 @@
-import { sample } from "@template/core";
+import { sample } from "@template/shared";
 
 export default function HomePage() {
   return (

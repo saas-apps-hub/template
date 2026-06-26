@@ -157,9 +157,9 @@ importers:
 
   apps/backend:
     dependencies:
-      '@template/core':
+      '@template/shared':
         specifier: workspace:*
-        version: link:../../libs/core
+        version: link:../../libs/shared
       express:
         specifier: ~5.2.1
         version: 5.2.1
@@ -170,9 +170,9 @@ importers:
 
   apps/marketing:
     dependencies:
-      '@template/core':
+      '@template/shared':
         specifier: workspace:*
-        version: link:../../libs/core
+        version: link:../../libs/shared
       next:
         specifier: ~16.1.6
         version: 16.1.7(@babel/core@7.29.7)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.100.0)
@@ -198,9 +198,9 @@ importers:
       '@expo/metro-runtime':
         specifier: ~6.1.2
         version: 6.1.2(expo@54.0.35)(react-dom@19.1.0(react@19.1.0))(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
-      '@template/core':
+      '@template/shared':
         specifier: workspace:*
-        version: link:../../libs/core
+        version: link:../../libs/shared
       expo:
         specifier: ~54.0.34
         version: 54.0.35(@babel/core@7.29.7)(@expo/metro-runtime@6.1.2)(expo-router@6.0.24)(react-native@0.81.5(@babel/core@7.29.7)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
@@ -266,7 +266,7 @@ importers:
         specifier: ~0.83.0
         version: 0.83.7
 
-  libs/core: {}
+  libs/shared: {}
 
 packages:
 
