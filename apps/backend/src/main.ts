@@ -1,4 +1,4 @@
-import { sample } from "@template/core";
+import { sample } from "@template/shared";
 import express from "express";
 
 const host = process.env.BACKEND_HOST ?? "0.0.0.0";

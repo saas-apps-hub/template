@@ -1,5 +1,5 @@
 import { StyleSheet, ScrollView, View, Text, StatusBar } from "react-native";
-import { sample } from "@template/core";
+import { sample } from "@template/shared";
 
 export default function HomeScreen() {
   return (

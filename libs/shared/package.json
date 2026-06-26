@@ -1,5 +1,5 @@
 {
-  "name": "@template/core",
+  "name": "@template/shared",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",
@@ -13,7 +13,7 @@
     "./package.json": "./package.json"
   },
   "nx": {
-    "name": "core"
+    "name": "@template/shared"
   },
   "dependencies": {}
 }

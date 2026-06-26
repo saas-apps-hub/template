@@ -13,7 +13,7 @@
       "path": "./apps/marketing"
     },
     {
-      "path": "./libs/core"
+      "path": "./libs/shared"
     }
   ]
 }

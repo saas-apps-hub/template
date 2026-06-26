@@ -1,7 +1,7 @@
 /// <reference types="jest" />
 /// <reference types="node" />
 module.exports = {
-  displayName: "mobile",
+  displayName: "@template/mobile",
   preset: "jest-expo",
   moduleFileExtensions: ["ts", "js", "html", "tsx", "jsx"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
